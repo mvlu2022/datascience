@@ -2,19 +2,16 @@ import seaborn as sns
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
 
-# Load Titanic dataset
 titanic = sns.load_dataset('titanic')
 
-# ========== SIMPLE LINEAR REGRESSION ==========
 simple_data = titanic.dropna(subset=['age', 'fare'])
 X_simple = sm.add_constant(simple_data['fare'])
 y_simple = simple_data['age']
 simple_model = sm.OLS(y_simple, X_simple).fit()
 
-print("=== Simple Linear Regression: Age ~ Fare ===")
+print("Simple Linear Regression: Age ~ Fare ")
 print(simple_model.summary())
 
-# 🔹 Plot Simple Linear Regression
 plt.figure(figsize=(7, 5))
 sns.scatterplot(x='fare', y='age', data=simple_data, label='Data')
 pred_y = simple_model.predict(X_simple)
@@ -26,7 +23,6 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-# ========== MULTIPLE LINEAR REGRESSION ==========
 titanic['sex'] = titanic['sex'].map({'male': 0, 'female': 1})
 multi_data = titanic.dropna(subset=['age', 'fare', 'pclass', 'sex'])
 X_multi = sm.add_constant(multi_data[['fare', 'pclass', 'sex']])
@@ -36,8 +32,7 @@ multi_model = sm.OLS(y_multi, X_multi).fit()
 print("\n=== Multiple Linear Regression: Age ~ Fare + Pclass + Sex ===")
 print(multi_model.summary())
 
-# Plot Coefficients of Multiple Regression
-coeffs = multi_model.params.drop('const')  # Exclude intercept
+coeffs = multi_model.params.drop('const')  
 plt.figure(figsize=(6, 4))
 coeffs.plot(kind='bar', color='skyblue')
 plt.title('Multiple Regression Coefficients')
