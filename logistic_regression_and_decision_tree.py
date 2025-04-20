@@ -47,5 +47,5 @@ plot_tree(tree_model,
           feature_names=X.columns,            
           class_names=['Died', 'Survived'],   
           filled=True, rounded=True)          
-plt.title("🎯 Decision Tree (Depth=3)")
+plt.title("Decision Tree (Depth=3)")
 plt.show()
